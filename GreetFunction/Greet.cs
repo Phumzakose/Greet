@@ -7,9 +7,10 @@ public class Greet
 
   public static string? userCommand = Console.ReadLine();
 
-  public static Dictionary<string, int> names = new Dictionary<string, int>();
+  public Dictionary<string, int> names = new Dictionary<string, int>();
   public static string? userName = "";
   public static int counter = 1;
+  //public static string answer = Console.ReadLine();
 
   public static string Greetings(string name, string Language)
 
@@ -32,7 +33,7 @@ public class Greet
     }
 
   }
-  public static void AddUsers(string userName, int counter)
+  public void AddUsers(string userName, int counter)
   {
     if (names.ContainsKey(userName))
     {
@@ -43,34 +44,52 @@ public class Greet
       names.Add(userName, counter);
     }
   }
-  public static string GetList(Dictionary<string, int> names)
-  {
-    foreach (KeyValuePair<string, int> kv in names)
-    {
-      return kv.Key + ":" + kv.Value;
-
-    }
-    return "";
-  }
-  public static string GreetedTimes(Dictionary<string, int> names)
+  public Dictionary<string, int> GetList(Dictionary<string, int> names)
   {
     // foreach (KeyValuePair<string, int> kv in names)
     // {
+    // return kv.Key + ":" + kv.Value;
+    return names;
 
-    if (names.ContainsKey(userName))
-    {
-      return "This name was greeted:" + names[userName];
-    }
-    else
-    {
-      return "This name does not exist";
-    }
-    // }
+    //}
+
   }
-  public static int Counter(Dictionary<string, int> names)
-  {
-    return names.Count();
-  }
+  // public static string GreetedTimes(Dictionary<string, int> names)
+  // {
+  //   foreach (KeyValuePair<string, int> kv in names)
+  //   {
+
+  //     if (names.ContainsKey(userName))
+  //     {
+  //       return "This name was greeted:" + names[userName];
+  //     }
+  //     else
+  //     {
+  //       return "This name does not exist";
+  //     }
+  //   }
+  //   return "";
+  // }
+  // public static int Counter(Dictionary<string, int> names)
+  // {
+  //   return names.Count();
+  // }
+  // public static int Remove(Dictionary<string, int> names, string answer)
+  // {
+  //   if (answer == "remove")
+  //   {
+  //     foreach (KeyValuePair<string, int> kv in names)
+  //     {
+  //       if (names.ContainsKey(userName))
+  //       {
+  //         names.Remove(userName);
+  //         return (names.Count());
+  //       }
+
+  //     }
+  //   }
+  //   return 0;
+  // }
 
 
 }

@@ -1,26 +1,26 @@
 ﻿using GreetFunction;
-
-
-Console.WriteLine("Enter your command to start");
-string? userName = "";
+Greet user = new Greet();
+Console.WriteLine("Enter help for the available Commands");
+string userName = "";
 string? Language = "";
 string? userCommand = "";
 
-Dictionary<string, int> names = new Dictionary<string, int>();
-
+//Dictionary<string, int> names = new Dictionary<string, int>();
 int counter = 1;
 
 string[] validCommands = { "greet", "greeted", "greeted user", "counter", "clear", "delete", "remove", "exit", "help" };
 
 while (userCommand != "exit")
 {
+  Console.WriteLine("****************************************************");
+  Console.WriteLine(">Enter your Command:");
+
   userCommand = Console.ReadLine().ToLower();
 
   if (!validCommands.Contains(userCommand))
   {
     Console.WriteLine("Invalid command");
   }
-
 
   if (userCommand == "greet")
   {
@@ -31,16 +31,15 @@ while (userCommand != "exit")
       Console.WriteLine("Please select the language you want to be greeted with between IsiXhosa, Setswana and IsiZulu");
       Language = Console.ReadLine();
       Console.WriteLine(Greet.Greetings(userName, Language));
-      if (names.ContainsKey(userName))
-      {
-        names[userName]++;
-      }
-      else
-      {
-        names.Add(userName, counter);
-      }
-
-      Console.WriteLine("Enter greet command to greet again");
+      // if (user.names.ContainsKey(userName))
+      // {
+      //   user.names[userName]++;
+      // }
+      // else
+      // {
+      //   user.names.Add(userName, counter);
+      // }
+      user.AddUsers(userName, counter);
     }
     else
     {
@@ -48,35 +47,38 @@ while (userCommand != "exit")
     }
   }
 
+
+
   else if (userCommand == "greeted")
   {
-    // foreach (KeyValuePair<string, int> kv in names)
-    // {
-    //   Console.WriteLine(kv.Key + ":" + kv.Value);
+    foreach (KeyValuePair<string, int> kv in user.GetList(user.names))
+    {
+      Console.WriteLine(kv.Key + ":" + kv.Value);
 
-    // }
-    Console.WriteLine(Greet.GetList(names));
+    }
+    //Console.WriteLine(user.GetList(user.names));
+
   }
   if (userCommand == "greeted user")
   {
     Console.WriteLine("Enter the name you want check");
     userName = Console.ReadLine();
-    // if (names.ContainsKey(userName))
-    // {
-    //   Console.WriteLine("This name was greeted" + ":" + names[userName]);
-    // }
-    // else
-    // {
-    //   Console.WriteLine("This name does not exist");
-    // }
-    Console.WriteLine(Greet.GreetedTimes(names));
+    if (user.names.ContainsKey(userName))
+    {
+      Console.WriteLine("This name was greeted" + ":" + user.names[userName]);
+    }
+    else
+    {
+      Console.WriteLine("This name does not exist");
+    }
+    //Console.WriteLine(Greet.GreetedTimes(names));
   }
 
 
   if (userCommand == "counter")
   {
-    // Console.WriteLine(names.Count());
-    Console.WriteLine(Greet.Counter(names));
+    Console.WriteLine(user.names.Count());
+
   }
   if (userCommand == "clear")
   {
@@ -86,20 +88,19 @@ while (userCommand != "exit")
     {
       Console.WriteLine("Please enter the name you want to remove");
       userName = Console.ReadLine();
-      foreach (KeyValuePair<string, int> kv in names)
+      foreach (KeyValuePair<string, int> kv in user.names)
       {
-        if (names.ContainsKey(userName))
+        if (user.names.ContainsKey(userName))
         {
-          names.Remove(userName);
-          Console.WriteLine(names.Count());
+          user.names.Remove(userName);
+          Console.WriteLine(user.names.Count());
         }
-
       }
     }
     else if (answer == "delete")
     {
-      names.Clear();
-      Console.WriteLine(names.Count());
+      user.names.Clear();
+      Console.WriteLine("You have cleared your list");
     }
 
   }
@@ -113,8 +114,8 @@ while (userCommand != "exit")
     Console.WriteLine(">To delete and remove people in the list enter clear");
     Console.WriteLine(">To exit the application enter exit");
   }
-
 }
+
 
 
 

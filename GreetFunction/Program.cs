@@ -1,68 +1,47 @@
 ﻿using GreetFunction;
 Greet user = new Greet();
+Console.WriteLine("Welcome to the greetings App");
 Console.WriteLine("Enter help for the available Commands");
-string userName = "";
-string? Language = "";
+
 string? userCommand = "";
 
-//Dictionary<string, int> names = new Dictionary<string, int>();
 int counter = 1;
 
-string[] validCommands = { "greet", "greeted", "greeted user", "counter", "clear", "delete", "remove", "exit", "help" };
+string[] validCommands = { "greet username language", "greeted username", "greeted ", "counter", "clear", "exit", "help" };
+
 
 while (userCommand != "exit")
 {
   Console.WriteLine("****************************************************");
   Console.WriteLine(">Enter your Command:");
 
+
   userCommand = Console.ReadLine().ToLower();
-
-  if (!validCommands.Contains(userCommand))
+  string[] command = userCommand.Split(" ");
+  string userName = "";
+  if (command.Length > 1)
   {
-    Console.WriteLine("Invalid command");
+    userName = command[1];
   }
 
-  if (userCommand == "greet")
+  if (command[0] == "greet" && command[2] != "")
   {
-    Console.WriteLine("Please enter your name");
-    userName = Console.ReadLine().ToLower();
-    if (userName != "")
-    {
-      Console.WriteLine("Please select the language you want to be greeted with between IsiXhosa, Setswana and IsiZulu");
-      Language = Console.ReadLine();
-      Console.WriteLine(Greet.Greetings(userName, Language));
-      // if (user.names.ContainsKey(userName))
-      // {
-      //   user.names[userName]++;
-      // }
-      // else
-      // {
-      //   user.names.Add(userName, counter);
-      // }
-      user.AddUsers(userName, counter);
-    }
-    else
-    {
-      Console.WriteLine("Please make sure you enter your name and use greet command to start again");
-    }
+    command[1] = userName;
+    Console.WriteLine(Greet.Greetings(command));
+    user.AddUsers(userName, counter);
+
+
   }
-
-
-
   else if (userCommand == "greeted")
   {
-    foreach (KeyValuePair<string, int> kv in user.GetList(user.names))
+    foreach (KeyValuePair<string, int> kv in Greet.GetList(user.names))
     {
       Console.WriteLine(kv.Key + ":" + kv.Value);
-
     }
-    //Console.WriteLine(user.GetList(user.names));
-
   }
-  if (userCommand == "greeted user")
+
+  else if (command[0] == "greeted" && command[1] != "")
   {
-    Console.WriteLine("Enter the name you want check");
-    userName = Console.ReadLine();
     if (user.names.ContainsKey(userName))
     {
       Console.WriteLine("This name was greeted" + ":" + user.names[userName]);
@@ -71,50 +50,45 @@ while (userCommand != "exit")
     {
       Console.WriteLine("This name does not exist");
     }
-    //Console.WriteLine(Greet.GreetedTimes(names));
+    //Console.WriteLine(user.GreetedTimes(user.names));
+
   }
 
+
+  else
 
   if (userCommand == "counter")
   {
     Console.WriteLine(user.names.Count());
 
   }
-  if (userCommand == "clear")
+  else if (userCommand == "clear")
   {
-    Console.WriteLine("Do you want to delete the list or remove one person");
-    string answer = Console.ReadLine();
-    if (answer == "remove")
+    user.names.Clear();
+    Console.WriteLine(user.Clear(user.names));
+  }
+  else if (command[0] == "clear")
+  {
+
+    foreach (KeyValuePair<string, int> kv in user.names)
     {
-      Console.WriteLine("Please enter the name you want to remove");
-      userName = Console.ReadLine();
-      foreach (KeyValuePair<string, int> kv in user.names)
+      command[1] = userName;
+      if (user.names.ContainsKey(userName))
       {
-        if (user.names.ContainsKey(userName))
-        {
-          user.names.Remove(userName);
-          Console.WriteLine(user.names.Count());
-        }
+        user.names.Remove(userName);
+        Console.WriteLine(userName + " was removed");
       }
     }
-    else if (answer == "delete")
-    {
-      user.names.Clear();
-      Console.WriteLine("You have cleared your list");
-    }
-
   }
+
 
   if (userCommand == "help")
   {
-    Console.WriteLine(">To greet people enter greet");
-    Console.WriteLine(">To see people who in list enter greeted");
-    Console.WriteLine(">To check how many times a user was greeted enter greeted user");
-    Console.WriteLine(">To check how many people have been greeted enter counter");
-    Console.WriteLine(">To delete and remove people in the list enter clear");
-    Console.WriteLine(">To exit the application enter exit");
+    user.Help();
   }
 }
+
+
 
 
 

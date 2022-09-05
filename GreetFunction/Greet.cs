@@ -10,29 +10,37 @@ public class Greet
   public Dictionary<string, int> names = new Dictionary<string, int>();
   public static string? userName = "";
   public static int counter = 1;
-  //public static string answer = Console.ReadLine();
 
-  public static string Greetings(string name, string Language)
 
+  public static string Greetings(string[] command)
   {
-    if (Language == "Setswana")
+
+
+    if (command[2] == "setswana" && command[0] == "greet")
     {
-      return "Dumelang, le kae? " + name;
+      return "Dumelang, le kae? " + command[1];
     }
-    else if (Language == "IsiXhosa")
+    else if (command[2] == "isixhosa" && command[0] == "greet")
     {
-      return "Molo, " + name;
+      return "Molo, " + command[1];
     }
-    else if (Language == "IsiZulu")
+    else if (command[2] == "isizulu" && command[0] == "greet")
     {
-      return "Sawubona, " + name;
+      return "Sawubona, " + command[1];
+    }
+    else if (command[2] == "" && command[0] == "greet")
+    {
+      return "Hello, " + command[1];
     }
     else
     {
-      return "Hello, " + name;
+      return command[2] + " is not recognised";
     }
 
+
   }
+
+
   public void AddUsers(string userName, int counter)
   {
     if (names.ContainsKey(userName))
@@ -44,53 +52,58 @@ public class Greet
       names.Add(userName, counter);
     }
   }
-  public Dictionary<string, int> GetList(Dictionary<string, int> names)
+  public static Dictionary<string, int> GetList(Dictionary<string, int> names)
   {
-    // foreach (KeyValuePair<string, int> kv in names)
-    // {
-    // return kv.Key + ":" + kv.Value;
     return names;
 
-    //}
+  }
+
+  public string GreetedTimes(Dictionary<string, int> names)
+  {
+    foreach (KeyValuePair<string, int> kv in names)
+    {
+      bool keyExists = names.ContainsKey(userName);
+      if (keyExists)
+      {
+        return userName + " was greeted " + names[userName] + " time/s";
+      }
+      else
+      {
+        return "This names was not greeted";
+      }
+
+    }
+    return "";
 
   }
-  // public static string GreetedTimes(Dictionary<string, int> names)
-  // {
-  //   foreach (KeyValuePair<string, int> kv in names)
-  //   {
-
-  //     if (names.ContainsKey(userName))
-  //     {
-  //       return "This name was greeted:" + names[userName];
-  //     }
-  //     else
-  //     {
-  //       return "This name does not exist";
-  //     }
-  //   }
-  //   return "";
-  // }
-  // public static int Counter(Dictionary<string, int> names)
-  // {
-  //   return names.Count();
-  // }
-  // public static int Remove(Dictionary<string, int> names, string answer)
-  // {
-  //   if (answer == "remove")
-  //   {
-  //     foreach (KeyValuePair<string, int> kv in names)
-  //     {
-  //       if (names.ContainsKey(userName))
-  //       {
-  //         names.Remove(userName);
-  //         return (names.Count());
-  //       }
-
-  //     }
-  //   }
-  //   return 0;
-  // }
-
+  public int Counter(Dictionary<string, int> names)
+  {
+    return names.Count();
+  }
+  public string Clear(Dictionary<string, int> names)
+  {
+    names.Clear();
+    return "Your list is cleared";
+  }
+  public string Remove(Dictionary<string, int> names)
+  {
+    if (names.ContainsKey(userName))
+    {
+      names.Remove(userName);
+      return userName + " was removed";
+    }
+    return "";
+  }
+  public void Help()
+  {
+    Console.WriteLine(">To greet people enter greet, name and language");
+    Console.WriteLine(">To see greeted people enter greeted");
+    Console.WriteLine(">To check how many times a user was greeted enter greeted and name");
+    Console.WriteLine(">To check how many people have been greeted enter counter");
+    Console.WriteLine(">To remove someone in the list enter clear and the name");
+    Console.WriteLine(">To delete all the people you have greeted enter clear");
+    Console.WriteLine(">To exit the application enter exit");
+  }
 
 }
 

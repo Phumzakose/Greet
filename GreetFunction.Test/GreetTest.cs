@@ -74,7 +74,14 @@ public class GreetTest
     Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
     Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
     Dictionary<string, int> people = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
-    Assert.Equal(3, user.Counter(people));
+    Assert.Equal("3 People have been greeted", user.Counter(people));
+
+  }
+  [Fact]
+  public void ItShouldBeAbleToReturnErrorMessageIfThereAreNoUsersGreeted()
+  {
+    Dictionary<string, int> people = new Dictionary<string, int>() { };
+    Assert.Equal("There are no people greeted", user.Counter(people));
 
   }
   [Fact]

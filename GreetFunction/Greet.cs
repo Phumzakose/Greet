@@ -75,9 +75,16 @@ public class Greet
     return "";
 
   }
-  public int Counter(Dictionary<string, int> names)
+  public string Counter(Dictionary<string, int> names)
   {
-    return names.Count();
+    if (names.Count != 0)
+    {
+      return names.Count() + " People have been greeted";
+    }
+    else
+    {
+      return "There are no people greeted";
+    }
   }
   public string Clear(Dictionary<string, int> names)
   {

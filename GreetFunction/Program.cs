@@ -12,13 +12,13 @@ while (userCommand != "exit")
   Console.WriteLine("****************************************************");
   Console.WriteLine(">Enter your Command:");
 
-
   userCommand = Console.ReadLine().ToLower();
   string[] command = userCommand.Trim().Split(" ");
   string userName = "";
   if (command.Length > 1)
   {
-    userName = command[1];
+    userName = char.ToUpper(command[1][0]) + command[1].Substring(1);
+
   }
 
   if (command[0] == "greet" && command[1] != "" && command.Length == 3)

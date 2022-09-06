@@ -57,7 +57,7 @@ while (userCommand != "exit")
   }
   else if (userCommand == "counter")
   {
-    Console.WriteLine(user.names.Count());
+    Console.WriteLine(user.Counter(user.names));
 
   }
   else if (userCommand == "clear")

@@ -79,7 +79,7 @@ public class Greet
   {
     if (names.Count != 0)
     {
-      return names.Count() + " People have been greeted";
+      return "You have greeted " + names.Count() + " people";
     }
     else
     {

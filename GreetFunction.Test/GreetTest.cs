@@ -38,8 +38,8 @@ public class GreetTest
     Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
     Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
 
-    Dictionary<string, int> people = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
-    Assert.Equal(people, Greet.GetList(people));
+    Dictionary<string, int> greeted = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
+    Assert.Equal(greeted, Greet.GetList(greeted));
 
     Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
     Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
@@ -52,8 +52,8 @@ public class GreetTest
   {
     Greet.Greetings(new string[] { "greet", "Lulo", "isizulu" });
     Greet.Greetings(new string[] { "greet", "Lulo", "isixhosa" });
-    Dictionary<string, int> people = new Dictionary<string, int>() { { "Lulo", 2 } };
-    Assert.Equal("Lulo was greeted 2 time/s", user.GreetedTimes(people, "Lulo"));
+    Dictionary<string, int> names = new Dictionary<string, int>() { { "Lulo", 2 } };
+    Assert.Equal("Lulo was greeted 2 time/s", user.GreetedTimes(names, "Lulo"));
 
   }
   [Fact]
@@ -61,8 +61,8 @@ public class GreetTest
   {
     Greet.Greetings(new string[] { "greet", "Lulo", "isizulu" });
     Greet.Greetings(new string[] { "greet", "Lulo", "isixhosa" });
-    Dictionary<string, int> people = new Dictionary<string, int>() { { "Lulo", 2 } };
-    Assert.Equal("This names was not greeted", user.GreetedTimes(people, "Thuso"));
+    Dictionary<string, int> names = new Dictionary<string, int>() { { "Lulo", 2 } };
+    Assert.Equal("This names was not greeted", user.GreetedTimes(names, "Thuso"));
 
   }
 
@@ -73,15 +73,15 @@ public class GreetTest
     Greet.Greetings(new string[] { "greet", "Lulo", "IsiZulu" });
     Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
     Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
-    Dictionary<string, int> people = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
-    Assert.Equal("3 People have been greeted", user.Counter(people));
+    Dictionary<string, int> names = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
+    Assert.Equal("You have greeted 3 people", user.Counter(names));
 
   }
   [Fact]
   public void ItShouldBeAbleToReturnErrorMessageIfThereAreNoUsersGreeted()
   {
-    Dictionary<string, int> people = new Dictionary<string, int>() { };
-    Assert.Equal("There are no people greeted", user.Counter(people));
+    Dictionary<string, int> names = new Dictionary<string, int>() { };
+    Assert.Equal("There are no people greeted", user.Counter(names));
 
   }
   [Fact]
@@ -90,8 +90,8 @@ public class GreetTest
     Greet.Greetings(new string[] { "greet", "Lulo", "IsiZulu" });
     Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
     Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
-    Dictionary<string, int> people = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
-    Assert.Equal("Your list is cleared", user.Clear(people));
+    Dictionary<string, int> names = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
+    Assert.Equal("Your list is cleared", user.Clear(names));
 
   }
   [Fact]
@@ -100,8 +100,8 @@ public class GreetTest
     Greet.Greetings(new string[] { "greet", "Lulo", "IsiZulu" });
     Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
     Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
-    Dictionary<string, int> people = new Dictionary<string, int>() { { "Lakhe:", 1 }, { "Lulo", 1 }, { "Phumza", 1 } };
-    Assert.Equal("Phumza was removed", user.Remove(people, "Phumza"));
+    Dictionary<string, int> names = new Dictionary<string, int>() { { "Lakhe:", 1 }, { "Lulo", 1 }, { "Phumza", 1 } };
+    Assert.Equal("Phumza was removed", user.Remove(names, "Phumza"));
 
   }
 

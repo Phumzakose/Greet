@@ -14,30 +14,30 @@ public class Greet
 
   public static string Greetings(string[] command)
   {
-
-
-    if (command[2] == "setswana" && command[0] == "greet")
+    if (command[0] == "greet" && command.Length == 3)
     {
-      return "Dumelang, le kae? " + command[1];
+      if (command[2] == "setswana" && command[0] == "greet")
+      {
+        return "Dumelang, le kae? " + command[1];
+      }
+      else if (command[2] == "isixhosa" && command[0] == "greet")
+      {
+        return "Molo, " + command[1];
+      }
+      else if (command[2] == "isizulu" && command[0] == "greet")
+      {
+        return "Sawubona, " + command[1];
+      }
+      else
+      {
+        return command[2] + " is not recognised";
+      }
     }
-    else if (command[2] == "isixhosa" && command[0] == "greet")
-    {
-      return "Molo, " + command[1];
-    }
-    else if (command[2] == "isizulu" && command[0] == "greet")
-    {
-      return "Sawubona, " + command[1];
-    }
-    else if (command[2] == "" && command[0] == "greet")
+    else if (command[0] == "greet" && command.Length == 2)
     {
       return "Hello, " + command[1];
     }
-    else
-    {
-      return command[2] + " is not recognised";
-    }
-
-
+    return "";
   }
 
 
@@ -58,12 +58,11 @@ public class Greet
 
   }
 
-  public string GreetedTimes(Dictionary<string, int> names)
+  public string GreetedTimes(Dictionary<string, int> names, string userName)
   {
     foreach (KeyValuePair<string, int> kv in names)
     {
-      bool keyExists = names.ContainsKey(userName);
-      if (keyExists)
+      if (names.ContainsKey(userName))
       {
         return userName + " was greeted " + names[userName] + " time/s";
       }
@@ -85,7 +84,7 @@ public class Greet
     names.Clear();
     return "Your list is cleared";
   }
-  public string Remove(Dictionary<string, int> names)
+  public string Remove(Dictionary<string, int> names, string userName)
   {
     if (names.ContainsKey(userName))
     {

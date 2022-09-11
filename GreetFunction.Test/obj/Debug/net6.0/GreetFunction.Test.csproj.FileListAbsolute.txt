@@ -102,3 +102,5 @@
 /home/codex/c#projects/Greet/GreetFunction.Test/obj/Debug/net6.0/GreetFunction.Test.pdb
 /home/codex/c#projects/Greet/GreetFunction.Test/obj/Debug/net6.0/GreetFunction.Test.genruntimeconfig.cache
 /home/codex/c#projects/Greet/GreetFunction.Test/obj/Debug/net6.0/ref/GreetFunction.Test.dll
+/home/codex/c#projects/Greet/GreetFunction.Test/bin/Debug/net6.0/Dapper.dll
+/home/codex/c#projects/Greet/GreetFunction.Test/bin/Debug/net6.0/Npgsql.dll

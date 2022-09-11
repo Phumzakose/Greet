@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "tYtJWDcOZ0FnAJFN9zhvMpuSYbn7JD+EJjM/xhDPs7WVOKcpT5l2LNev76AIA2Lo1M3/THpiDoLMvq6itdtSXg==",
+  "dgSpecHash": "EjPNx2qaMNSxdzZZL3y/ngLEbGuJN4Y+9wKKpldIHOpTJ8+lSz6tnP0bsGFxAGf9Rx9kY8Z/L9My5GdJA/WStw==",
   "success": true,
   "projectFilePath": "/home/codex/c#projects/Greet/GreetFunction/GreetFunction.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/codex/.nuget/packages/dapper/2.0.123/dapper.2.0.123.nupkg.sha512",
+    "/home/codex/.nuget/packages/npgsql/6.0.6/npgsql.6.0.6.nupkg.sha512",
+    "/home/codex/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,18 +1,15 @@
 namespace GreetFunction;
-public class Greet
+public class Greet : IGreet
 {
-  public string UserName { get; set; } = String.Empty;
+  private string UserName { get; set; } = String.Empty;
 
-  public static string Language { get; set; } = String.Empty;
+  private static string Language { get; set; } = String.Empty;
 
-  public static string? userCommand = Console.ReadLine();
-
-  public Dictionary<string, int> names = new Dictionary<string, int>();
+  private Dictionary<string, int> names = new Dictionary<string, int>();
   public static string? userName = "";
   public static int counter = 1;
 
-
-  public static string Greetings(string[] command)
+  public string Greetings(string[] command)
   {
     if (command[0] == "greet" && command.Length == 3)
     {
@@ -43,6 +40,7 @@ public class Greet
 
   public void AddUsers(string userName, int counter)
   {
+
     if (names.ContainsKey(userName))
     {
       names[userName]++;
@@ -52,14 +50,17 @@ public class Greet
       names.Add(userName, counter);
     }
   }
-  public static Dictionary<string, int> GetList(Dictionary<string, int> names)
+  public Dictionary<string, int> GetList()
   {
+
     return names;
 
   }
 
-  public string GreetedTimes(Dictionary<string, int> names, string userName)
+  public string GreetedTimes(string userName)
   {
+
+
     foreach (KeyValuePair<string, int> kv in names)
     {
       if (names.ContainsKey(userName))
@@ -68,14 +69,14 @@ public class Greet
       }
       else
       {
-        return "This names was not greeted";
+        return "This name was not greeted";
       }
 
     }
     return "";
 
   }
-  public string Counter(Dictionary<string, int> names)
+  public string Counter()
   {
     if (names.Count != 0)
     {
@@ -86,13 +87,15 @@ public class Greet
       return "There are no people greeted";
     }
   }
-  public string Clear(Dictionary<string, int> names)
+  public string Clear()
   {
+
     names.Clear();
     return "Your list is cleared";
   }
-  public string Remove(Dictionary<string, int> names, string userName)
+  public string Remove(string userName)
   {
+
     if (names.ContainsKey(userName))
     {
       names.Remove(userName);

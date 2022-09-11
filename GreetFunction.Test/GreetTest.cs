@@ -7,101 +7,102 @@ public class GreetTest
   [Fact]
   public void ItShouldbeAbleToGreetUserWithIsiXhosa()
   {
-    Assert.Equal("Molo, Phumza", Greet.Greetings(new string[] { "greet", "Phumza", "isixhosa" }));
+    Assert.Equal("Molo, Phumza", user.Greetings(new string[] { "greet", "Phumza", "isixhosa" }));
 
   }
   [Fact]
   public void ItShouldbeAbleToGreetUserWithSetswana()
   {
-    Assert.Equal("Dumelang, le kae? Thembi", Greet.Greetings(new string[] { "greet", "Thembi", "setswana" }));
+    Assert.Equal("Dumelang, le kae? Thembi", user.Greetings(new string[] { "greet", "Thembi", "setswana" }));
   }
   [Fact]
   public void ItShouldbeAbleToGreetUserWithIsizulu()
   {
-    Assert.Equal("Sawubona, Lukho", Greet.Greetings(new string[] { "greet", "Lukho", "isizulu" }));
+    Assert.Equal("Sawubona, Lukho", user.Greetings(new string[] { "greet", "Lukho", "isizulu" }));
   }
   [Fact]
   public void ItShouldbeAbleToGreetUserWithEnglishIfNoLanguageIsEntered()
   {
-    Assert.Equal("Hello, Zikho", Greet.Greetings(new string[] { "greet", "Zikho" }));
+    Assert.Equal("Hello, Zikho", user.Greetings(new string[] { "greet", "Zikho" }));
   }
   [Fact]
   public void ItShouldbeAbleToReturnErrorMesssage()
   {
-    Assert.Equal("sepedi is not recognised", Greet.Greetings(new string[] { "greet", "Zikho", "sepedi" }));
+    Assert.Equal("sepedi is not recognised", user.Greetings(new string[] { "greet", "Zikho", "sepedi" }));
   }
   [Fact]
   public void ItShouldBeAbleToReturnTheListOfPeopleGreeted()
   {
-    Greet.Greetings(new string[] { "greet", "Lulo", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Lulo", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
+    user.AddUsers("Lulo", 1);
+    user.AddUsers("Lulo", 1);
+    user.AddUsers("Phumza", 1);
+    user.AddUsers("Lakhe", 1);
 
-    Dictionary<string, int> greeted = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
-    Assert.Equal(greeted, Greet.GetList(greeted));
 
-    Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
-    Dictionary<string, int> names = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 } };
-    Assert.Equal(names, Greet.GetList(names));
+    Dictionary<string, int> greeted = new Dictionary<string, int>() { { "Lulo", 2 }, { "Phumza", 1 }, { "Lakhe", 1 } };
+    Assert.Equal(greeted, user.GetList());
+
+    user.AddUsers("Phumza", 1);
+    user.AddUsers("Lakhe", 1);
+    Dictionary<string, int> names = new Dictionary<string, int>() { { "Lulo", 2 }, { "Phumza", 2 }, { "Lakhe", 2 } };
+    Assert.Equal(names, user.GetList());
 
   }
   [Fact]
   public void ItShouldBeAbleToReturnHowManyTimesTheUserWasGreeted()
   {
-    Greet.Greetings(new string[] { "greet", "Lulo", "isizulu" });
-    Greet.Greetings(new string[] { "greet", "Lulo", "isixhosa" });
+    user.AddUsers("Lulo", 1);
+    user.AddUsers("Lulo", 1);
     Dictionary<string, int> names = new Dictionary<string, int>() { { "Lulo", 2 } };
-    Assert.Equal("Lulo was greeted 2 time/s", user.GreetedTimes(names, "Lulo"));
+    Assert.Equal("Lulo was greeted 2 time/s", user.GreetedTimes("Lulo"));
 
   }
   [Fact]
   public void ItShouldBeAbleToReturnErrorMessageIfTheUserDoesNotExist()
   {
-    Greet.Greetings(new string[] { "greet", "Lulo", "isizulu" });
-    Greet.Greetings(new string[] { "greet", "Lulo", "isixhosa" });
-    Dictionary<string, int> names = new Dictionary<string, int>() { { "Lulo", 2 } };
-    Assert.Equal("This names was not greeted", user.GreetedTimes(names, "Thuso"));
+    user.AddUsers("Lulo", 1);
+    user.AddUsers("Lulo", 1);
+
+    Assert.Equal("This name was not greeted", user.GreetedTimes("Thuso"));
 
   }
 
   [Fact]
   public void ItShouldBeAbleToReturnTheNumberOfUsersGreeted()
   {
-    Greet.Greetings(new string[] { "greet", "Lulo", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Lulo", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
-    Dictionary<string, int> names = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
-    Assert.Equal("You have greeted 3 people", user.Counter(names));
+    //user.AddUsers("Lulo", 1);
+    user.AddUsers("Lulo", 1);
+    user.AddUsers("Phumza", 1);
+    user.AddUsers("Lakhe", 1);
+
+    Assert.Equal("You have greeted 3 people", user.Counter());
 
   }
   [Fact]
   public void ItShouldBeAbleToReturnErrorMessageIfThereAreNoUsersGreeted()
   {
     Dictionary<string, int> names = new Dictionary<string, int>() { };
-    Assert.Equal("There are no people greeted", user.Counter(names));
+    Assert.Equal("There are no people greeted", user.Counter());
 
   }
   [Fact]
   public void ItShouldBeAbleToClearAllThePeopleInTheList()
   {
-    Greet.Greetings(new string[] { "greet", "Lulo", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
-    Dictionary<string, int> names = new Dictionary<string, int>() { { "Phumza", 1 }, { "Lakhe:", 1 }, { "Lulo", 2 } };
-    Assert.Equal("Your list is cleared", user.Clear(names));
+    user.AddUsers("Lulo", 1);
+    user.AddUsers("Phumza", 1);
+    user.AddUsers("Lakhe", 1);
+
+    Assert.Equal("Your list is cleared", user.Clear());
 
   }
   [Fact]
   public void ItShouldBeAbleToRemoveOnePersonFromTheList()
   {
-    Greet.Greetings(new string[] { "greet", "Lulo", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Phumza", "IsiZulu" });
-    Greet.Greetings(new string[] { "greet", "Lakhe", "IsiZulu" });
-    Dictionary<string, int> names = new Dictionary<string, int>() { { "Lakhe:", 1 }, { "Lulo", 1 }, { "Phumza", 1 } };
-    Assert.Equal("Phumza was removed", user.Remove(names, "Phumza"));
+    user.AddUsers("Lulo", 1);
+    user.AddUsers("Phumza", 1);
+    user.AddUsers("Lakhe", 1);
+
+    Assert.Equal("Phumza was removed", user.Remove("Phumza"));
 
   }
 

@@ -13,3 +13,6 @@
 /home/codex/c#projects/Greet/GreetFunction/obj/Debug/net6.0/GreetFunction.pdb
 /home/codex/c#projects/Greet/GreetFunction/obj/Debug/net6.0/GreetFunction.genruntimeconfig.cache
 /home/codex/c#projects/Greet/GreetFunction/obj/Debug/net6.0/ref/GreetFunction.dll
+/home/codex/c#projects/Greet/GreetFunction/bin/Debug/net6.0/Dapper.dll
+/home/codex/c#projects/Greet/GreetFunction/bin/Debug/net6.0/Npgsql.dll
+/home/codex/c#projects/Greet/GreetFunction/obj/Debug/net6.0/GreetFunction.csproj.CopyComplete

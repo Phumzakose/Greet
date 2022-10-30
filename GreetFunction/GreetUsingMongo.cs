@@ -1,14 +1,12 @@
-using Dapper;
-using Npgsql;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Bson.Serialization.Attributes;
+
 
 namespace GreetFunction;
 
-
-public class GreetUsingDataBase : IGreet
+public class GreetUsingMongo : IGreet
 {
-  string connectionString = "Server=tiny.db.elephantsql.com ;Port=5432;Database=znshpmlq;UserId=znshpmlq;Password=EMEIxMo2NpTDcz4rsKbgvUn2hyNqRJWi";
-
- 
   public string Greetings(string[] command)
   {
     if (command[0] == "greet" && command.Length == 3)
@@ -38,43 +36,46 @@ public class GreetUsingDataBase : IGreet
   }
   public void AddUsers(string userName, int counter)
   {
+    var client = new MongoClient("mongodb://0.0.0.0:27017");
+    var database = client.GetDatabase("friends");
+    var collection = database.GetCollection<Friends>("greet");
 
-    using var connection = new NpgsqlConnection(connectionString);
-    connection.Open();
-    var parameters = new { UserName = userName };
-    var sql = @"select count (*) from people where firstname = @UserName;";
-    var result = connection.QueryFirst(sql, parameters);
-    if (result.count == 1)
+
+    var item = collection.Find(x => x.FirstName == userName).CountDocuments();
+    var na = collection.Find(x => x.FirstName == userName).FirstOrDefault();
+
+    if (item == 1)
     {
-      connection.Query<People>(@"UPDATE people SET greetedtimes = greetedtimes + 1 WHERE firstname= @UserName", parameters);
+      na.Counter = Convert.ToInt32(item + 1);
+      collection.ReplaceOne(x => x.FirstName == userName, na);
     }
     else
     {
-      connection.Execute(@"
-    insert into 
-    people (FirstName, GreetedTimes)
-    values 
-    (@FirstName, @GreetedTimes);",
-  new People()
-  {
-    FirstName = userName,
-    GreetedTimes = counter
 
-  });
-      connection.Close();
+      Friends doc = new Friends()
+      {
+
+        FirstName = userName,
+        Counter = counter
+
+      };
+      collection.InsertOne(doc);
+
+
     }
-
   }
   public Dictionary<string, int> GetList()
   {
-    using var connection = new NpgsqlConnection(connectionString);
-    connection.Open();
+    var client = new MongoClient("mongodb://0.0.0.0:27017");
+    var database = client.GetDatabase("friends");
+    var collection = database.GetCollection<Friends>("greet");
+
     Dictionary<string, int> names = new Dictionary<string, int>();
 
-    var list = connection.Query<People>(@"select * from people");
-    foreach (var friends in list)
+    var doc = new BsonDocument();
+    foreach (var item in collection.Find(doc).ToList())
     {
-      names.Add(friends.FirstName, friends.GreetedTimes);
+      names.Add(item.FirstName, item.Counter);
     }
 
     return names;
@@ -82,14 +83,17 @@ public class GreetUsingDataBase : IGreet
   }
   public string GreetedTimes(string userName)
   {
-    using var connection = new NpgsqlConnection(connectionString);
-    connection.Open();
+
+    var client = new MongoClient("mongodb://0.0.0.0:27017");
+    var database = client.GetDatabase("friends");
+    var collection = database.GetCollection<Friends>("greet");
+
     Dictionary<string, int> names = new Dictionary<string, int>();
 
-    var list = connection.Query<People>(@"select * from people");
-    foreach (var friends in list)
+    var doc = new BsonDocument();
+    foreach (var item in collection.Find(doc).ToList())
     {
-      names.Add(friends.FirstName, friends.GreetedTimes);
+      names.Add(item.FirstName, item.Counter);
     }
 
     foreach (KeyValuePair<string, int> kv in names)
@@ -102,21 +106,24 @@ public class GreetUsingDataBase : IGreet
       {
         return "This name was not greeted";
       }
-
     }
+
     return "";
   }
   public string Counter()
   {
-    using var connection = new NpgsqlConnection(connectionString);
-    connection.Open();
+    var client = new MongoClient("mongodb://0.0.0.0:27017");
+    var database = client.GetDatabase("friends");
+    var collection = database.GetCollection<Friends>("greet");
+
     Dictionary<string, int> names = new Dictionary<string, int>();
 
-    var list = connection.Query<People>(@"select * from people");
-    foreach (var friends in list)
+    var doc = new BsonDocument();
+    foreach (var item in collection.Find(doc).ToList())
     {
-      names.Add(friends.FirstName, friends.GreetedTimes);
+      names.Add(item.FirstName, item.Counter);
     }
+
     if (names.Count != 0)
     {
       return "You have greeted " + names.Count() + " people";
@@ -125,23 +132,25 @@ public class GreetUsingDataBase : IGreet
     {
       return "There are no people greeted";
     }
+
   }
   public string Clear()
   {
-    using var connection = new NpgsqlConnection(connectionString);
-    connection.Open();
+    var client = new MongoClient("mongodb://0.0.0.0:27017");
+    var database = client.GetDatabase("friends");
+    var collection = database.GetCollection<Friends>("greet");
+    var doc = new BsonDocument();
+    collection.DeleteMany(doc);
 
-    var list = connection.Query<People>(@"delete from people");
     return "Your list is cleared";
   }
   public string Remove(string userName)
   {
-    using var connection = new NpgsqlConnection(connectionString);
-    connection.Open();
+    var client = new MongoClient("mongodb://0.0.0.0:27017");
+    var database = client.GetDatabase("friends");
+    var collection = database.GetCollection<Friends>("greet");
+    collection.DeleteOne(x => x.FirstName == userName);
 
-    var parameters = new { UserName = userName };
-    var sql = @"DELETE from people where firstname = @UserName";
-    var list = connection.Query<People>(sql, parameters);
 
     return userName + " was removed";
 
@@ -156,4 +165,5 @@ public class GreetUsingDataBase : IGreet
     Console.WriteLine(">To delete all the people you have greeted enter clear");
     Console.WriteLine(">To exit the application enter exit");
   }
+
 }

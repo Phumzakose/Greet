@@ -1,8 +1,9 @@
 ﻿using Dapper;
 using Npgsql;
+
 using GreetFunction;
 
-IGreet user = new GreetUsingDataBase();
+IGreet user = new GreetUsingMongo();
 
 Console.WriteLine("Welcome to the greetings App");
 Console.WriteLine("Enter help for the available Commands");
@@ -83,7 +84,7 @@ while (userCommand != "exit")
   {
     Console.WriteLine(user.Clear());
   }
-  else if (command[0] == "clear")
+  else if (command[0] == "clear" && command[1] != "")
   {
 
     foreach (KeyValuePair<string, int> kv in user.GetList())
@@ -101,14 +102,3 @@ while (userCommand != "exit")
     Console.WriteLine("Invalid command");
   }
 }
-
-
-
-
-
-
-
-
-
-
-
